@@ -26,39 +26,38 @@ const gameController = ((playerPlaying, playerWaiting) => {
 
     const gameBoard = (function(params) {
         const selector = document.querySelector("#gameBoard");
-        const size = 3;
-        const map = new Array(size);
+        const map = new Array(3);
     
-        const reset = () => {
-            for (let i = 0; i < size; i++) {
-                map[i] = new Array(size);
-                for (let j = 0; j < size; j++) {
+        const init = () => {
+            for (let i = 0; i < 3; i++) {
+                map[i] = new Array(3);
+                for (let j = 0; j < 3; j++) {
                     map[i][j] = null;
                 }
             }    
         }
 
-        reset();
+        init();
     
         function getResult(params) {
             let empty = 0;
-            for (let i = 0; i < size; i++) {   
-                for (let j = 0; j < size; j++) {
+            for (let i = 0; i < 3; i++) {   
+                for (let j = 0; j < 3; j++) {
                     if (map[i][j] == null) empty++;
                 }
             }
     
     
-            for (let i = 0; i < size; i++) {
+            for (let i = 0; i < 3; i++) {
                 let end = true;
-                for (let j = 1; j < size; j++) {
+                for (let j = 1; j < 3; j++) {
                     if (map[i][j] != map[i][0]) end = false;
                 }
                 if (end && map[i][0] != null) return map[i][0];
             }
-            for (let j = 0; j < size; j++) {        
+            for (let j = 0; j < 3; j++) {        
                 let end = true;
-                for (let i = 1; i < size; i++) {
+                for (let i = 1; i < 3; i++) {
                     if (map[i][j] != map[0][j]) end = false;
                 }
                 if (end && map[0][j]
@@ -66,16 +65,16 @@ const gameController = ((playerPlaying, playerWaiting) => {
             }
     
             let end = true;
-            for (let i = 0, j = 0; i < size; i++, j++) {
+            for (let i = 0, j = 0; i < 3; i++, j++) {
                 if (map[i][j] != map[0][0]) end = false;
             }
             if (end && map[0][0] != null) return map[0][0];
     
             let end2 = true;
-            for (let i = size - 1, j = 0; i >= 0; i--, j++) {
-                if (map[i][j] != map[size - 1][0]) end = false;
+            for (let i = 3 - 1, j = 0; i >= 0; i--, j++) {
+                if (map[i][j] != map[2][0]) end = false;
             }
-            if (end && map[size - 1][0] != null) return map[size - 1][0];
+            if (end && map[2][0] != null) return map[2][0];
     
             if (empty == 0) {
                 return "draw";
@@ -120,16 +119,17 @@ const player = (isCircle, name) =>{
     return {win, name, type};
 }
 
-const displayMenu = () => {
+const displayMenu = (() => {
     const menu = document.querySelector("#menu");
     const playButton = document.querySelector("#playButton");
     const inputName1 = document.querySelector("#inputName1");
     const inputName2 = document.querySelector("#inputName2");
 
     playButton.addEventListener("click", tryToAdvance);
+    
 
     function turnOn(params) {
-        menu.style.display = "block";
+        menu.style.display = "flex";
     }
 
     function turnOff(params) {
@@ -149,11 +149,41 @@ const displayMenu = () => {
         }
 
 
+        displayController.advanceToGame(player(true, name1), player(false, name2));
     }
-}
+
+    return {turnOn, turnOff};
+})();
 
 const displayGame = (() => {
-    const game = document.querySelector("game");
+    const game = document.querySelector("#game");
+    const grid = document.querySelector("#grid");
+    const menuButton = document.querySelector("#menuButton");
+    menuButton.addEventListener("click", returnToMenu);
+    
+    let round;
+    let ended;
+
+    function init(nextPlayer1, nextPlayer2) {
+        round = gameController(nextPlayer1, nextPlayer2);
+        ended = false;
+
+        const childrenArray = Array.from(grid.childNodes);
+        childrenArray.forEach(child => child.remove());
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                const block = document.createElement("div");
+                block.classList.add("block");
+                block.dataset.i = i;
+                block.dataset.j = j;
+                grid.appendChild(block);
+            }
+        } 
+    }
+
+    function update(params) {
+        
+    }
     
     function turnOn(params) {
         game.style.display = "block";
@@ -162,6 +192,12 @@ const displayGame = (() => {
     function turnOff(params) {
         game.style.display = "none";
     }
+
+    function returnToMenu(params) {
+        displayController.turnOnMenu();
+    }
+
+    return {turnOn, turnOff, init};
 })();
 
 
@@ -169,20 +205,31 @@ const displayController = (function (params) {
     let player1;
     let player2;
     
+    turnOnMenu();
     
     function turnOnMenu(params) {
-        
+        displayMenu.turnOn();
+        displayGame.turnOff();
     }
 
     function turnOnGame(params) {
-        
+        displayMenu.turnOff();
+        displayGame.turnOn();
     }
 
-    function setPlayers(player1, player2) {
-        player1 = player1;
+    function advanceToGame(nextPlayer1, nextPlayer2) {
+        player1 = nextPlayer1;
+        player2 = nextPlayer2;
+
+        displayGame.init(player1, player2);
+        turnOnGame();
     }
 
+    return {advanceToGame, turnOnMenu};
 })();
+
+console.log("oj");
+
 
 
 
