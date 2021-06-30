@@ -121,8 +121,13 @@ const player = (isCircle, name) =>{
 }
 
 const displayMenu = () => {
-    const menu = document.querySelector("menu");
-    
+    const menu = document.querySelector("#menu");
+    const playButton = document.querySelector("#playButton");
+    const inputName1 = document.querySelector("#inputName1");
+    const inputName2 = document.querySelector("#inputName2");
+
+    playButton.addEventListener("click", tryToAdvance);
+
     function turnOn(params) {
         menu.style.display = "block";
     }
@@ -130,15 +135,53 @@ const displayMenu = () => {
     function turnOff(params) {
         menu.style.display = "none";
     }
+
+    function tryToAdvance(params) {
+        const name1 = inputName1.value;
+        const name2 = inputName2.value;
+        if (!name1) {
+            alert("Starting player's name is empty!");
+            return;
+        }
+        if (!name2) {
+            alert("Other player's name is empty!");
+            return;
+        }
+
+
+    }
 }
 
-const displayGame {
+const displayGame = (() => {
+    const game = document.querySelector("game");
+    
+    function turnOn(params) {
+        game.style.display = "block";
+    }
 
-}
+    function turnOff(params) {
+        game.style.display = "none";
+    }
+})();
 
 
 const displayController = (function (params) {
+    let player1;
+    let player2;
     
+    
+    function turnOnMenu(params) {
+        
+    }
+
+    function turnOnGame(params) {
+        
+    }
+
+    function setPlayers(player1, player2) {
+        player1 = player1;
+    }
+
 })();
 
 
