@@ -120,21 +120,29 @@ const player = (isCircle, name) =>{
     return {win, name, type};
 }
 
-
-const player1 = player(false, "jaz");
-const player2 = player(true, "ti");
-
-
-let game = gameController(player1, player2);
-
-
-while (true){
-    const val = prompt("It's player " + game.getOrder()[0].name + "'s turn!");
-    const res = game.playCell(val.charAt(0), val.charAt(2));
-    console.log(res);
-    if (res == player1 || res == player2 || res == "draw") break;
+const displayMenu = () => {
+    const menu = document.querySelector("menu");
     
+    function turnOn(params) {
+        menu.style.display = "block";
+    }
+
+    function turnOff(params) {
+        menu.style.display = "none";
+    }
 }
+
+const displayGame {
+
+}
+
+
+const displayController = (function (params) {
+    
+})();
+
+
+
 
 
 

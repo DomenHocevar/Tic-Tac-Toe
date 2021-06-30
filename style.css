@@ -1,0 +1,72 @@
+
+
+body{
+    background-color: lightblue;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+h1 {
+    background-color: darkred;
+    margin-top: 5vh;
+    color: white;
+}
+
+
+button {
+    margin-bottom: 10px;
+    padding: 20px 40px;
+
+}
+
+label {
+    margin: 20px;
+}
+
+section {
+    margin: auto;
+    margin-top: 5vh;
+}
+
+.block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(199, 99, 28);
+    
+    padding: 0;
+}
+
+.absolute{
+    display: absolute;
+    
+}
+
+#grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-gap: 20px;
+    width: 40vmin;
+    height: 40vmin;
+    background-color: black;
+    margin: auto;
+    font-size: 60px;
+}
+
+#menu {
+    background-color: rgb(199, 99, 28);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70vw;
+    border-radius: 10%;
+}
+
+#nameInputs {
+    display: flex;
+    margin-top: 5vh;
+    justify-content: center;
+}
