@@ -133,6 +133,8 @@ section {
     max-width: 30vw;
     width: fit-content;
     height: fit-content;
+    width: -moz-fit-content;
+    height: -moz-fit-content;
     background-color: grey;
     border-radius: 10%;
     margin-left: 20px;
@@ -160,6 +162,7 @@ section {
     margin: 5vh auto;
     background-color: grey;
     width: fit-content;
+    width: -moz-fit-content;
     padding: 10px;
     border-radius: 10%;
     border: 5px solid darkred;

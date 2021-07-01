@@ -184,13 +184,17 @@ const displayGame = (() => {
     let player2;
     let round;
 
-    menuButton.addEventListener("click", returnToMenu);
-    restartButton.addEventListener("click", () => (init(player1, player2)));
+    let firstPlayerHasTurn;
 
-    function init(nextPlayer1, nextPlayer2) {
+    menuButton.addEventListener("click", returnToMenu);
+    restartButton.addEventListener("click", () => (init(player1, player2, firstPlayerHasTurn)));
+
+    function init(nextPlayer1, nextPlayer2, changeOrder) {
+        firstPlayerHasTurn = !changeOrder;
         player1 = nextPlayer1;
         player2 = nextPlayer2;
-        round = gameController(player1, player2);
+        if (changeOrder) round = gameController(player2, player1);
+        else round = gameController(player1, player2);
 
         scoreName1.textContent = player1.name;
         scoreName2.textContent = player2.name; 
@@ -304,7 +308,7 @@ const displayController = (function (params) {
         player1 = nextPlayer1;
         player2 = nextPlayer2;
 
-        displayGame.init(player1, player2);
+        displayGame.init(player1, player2, false);
         turnOnGame();
     }
 
